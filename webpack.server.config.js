@@ -4,21 +4,25 @@ let fs = require('fs');
 let path = require('path');
 let webpack = require('webpack');
 
+function pathResolve(yourPath) {
+    return path.resolve(__dirname, yourPath);
+}
+
 module.exports = {
-    context: path.resolve(__dirname, 'backend'),
+    context:    pathResolve('backend'),
 
     entry: {
         server: './server'
     },
 
     output: {
-        path: __dirname + '/backend',
-        filename: 'server.bundle.js'
+        path:       pathResolve('backend'),
+        filename:   'server.bundle.js'
     },
 
     target: 'node',
 
-    externals: fs.readdirSync(path.resolve(__dirname, 'node_modules')).concat([
+    externals: fs.readdirSync(pathResolve('node_modules')).concat([
         'react-dom/server', 'react/addons',
     ]).reduce(function (ext, mod) {
         ext[mod] = 'commonjs ' + mod;
@@ -27,12 +31,16 @@ module.exports = {
 
     node: {
         __filename: true,
-        __dirname: true
+        __dirname:  true
     },
 
     module: {
         loaders: [
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' }
+            {
+                test:       /\.js$/,
+                exclude:    /node_modules/,
+                loader:     'babel-loader?presets[]=es2015&presets[]=react'
+            }
         ]
     },
 

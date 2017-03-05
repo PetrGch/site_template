@@ -5,15 +5,20 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const AssetsPlugin = require('assets-webpack-plugin');
 
+
+function pathResolve(yourPath) {
+    return path.resolve(__dirname, yourPath);
+}
+
 module.exports = {
-    context:    __dirname + '/frontend',
+    context:    pathResolve('frontend'),
 
     entry: {
         index:  './index'
     },
 
     output: {
-        path:           __dirname + '/backend',
+        path:           pathResolve('backend'),
         publicPath:     '/',
         filename:       '[name].[hash].js',
         chunkFilename:  '[id].js',
@@ -56,15 +61,15 @@ module.exports = {
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                properties: true,
-                conditionals: true,
-                loops: true,
-                unused: true,
-                collapse_vars: true,
-                dead_code: true,
-                drop_console: true,
-                drop_debugger: true,
-                warnings: false,
+                properties:     true,
+                conditionals:   true,
+                loops:          true,
+                unused:         true,
+                collapse_vars:  true,
+                dead_code:      true,
+                drop_console:   true,
+                drop_debugger:  true,
+                warnings:       false,
             },
         }),
         new webpack.NoEmitOnErrorsPlugin(),
@@ -78,8 +83,8 @@ module.exports = {
             PropTypes:  'react/lib/ReactPropTypes',
         }),
         new AssetsPlugin({
-            filename: 'assets.json',
-            path: __dirname + '/backend'
+            filename:   'assets.json',
+            path:       pathResolve('backend')
         })
     ],
 };

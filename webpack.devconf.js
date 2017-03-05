@@ -1,18 +1,22 @@
 'use strict';
 
-let webpack = require('webpack');
-let path = require('path');
-let ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+function pathResolve(yourPath) {
+    return path.resolve(__dirname, yourPath);
+}
 
 module.exports = {
-    context:    __dirname + '/frontend',
+    context:    pathResolve('frontend'),
 
     entry: {
         index:  './index'
     },
 
     output: {
-        path:           __dirname + '/public',
+        path:           pathResolve('public'),
         publicPath:     '/',
         filename:       '[name].js',
         chunkFilename:  '[id].js',
@@ -68,7 +72,7 @@ module.exports = {
     devServer: {
         host:           'localhost',
         port:           3000,
-        contentBase:    __dirname + '/public',
+        contentBase:    pathResolve('public'),
         publicPath:     '/',
         hot:            true,
         inline:         true,
