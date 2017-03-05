@@ -2,3 +2,7 @@ body {
     display: flex;
     background-color: darkorchid;
 }
+
+.active {
+    color: chartreuse;
+}

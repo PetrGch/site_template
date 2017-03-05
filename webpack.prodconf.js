@@ -1,8 +1,9 @@
 'use strict';
 
-let webpack = require('webpack');
-let path = require('path');
-let ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = {
     context:    __dirname + '/frontend',
@@ -12,7 +13,7 @@ module.exports = {
     },
 
     output: {
-        path:           __dirname + '/public',
+        path:           __dirname + '/backend',
         publicPath:     '/',
         filename:       '[name].[hash].js',
         chunkFilename:  '[id].js',
@@ -69,10 +70,16 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin("[name].[hash].css"),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.ProvidePlugin({
             ReactDOM:   'react-dom',
             React:      'react',
             PropTypes:  'react/lib/ReactPropTypes',
+        }),
+        new AssetsPlugin({
+            filename: 'assets.json',
+            path: __dirname + '/backend'
         })
     ],
 };
